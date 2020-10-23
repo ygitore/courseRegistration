@@ -32,7 +32,7 @@ namespace CourseRegistration.Controllers
             {
                 return NotFound();
             }
-            return Ok(_departmentRepository.Get(id));
+            return Ok(department);
         }
         [HttpPost]
         public IActionResult Post(Department department)
