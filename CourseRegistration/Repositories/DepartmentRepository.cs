@@ -89,5 +89,32 @@ namespace CourseRegistration.Repositories
                 };
             }
         }
+        public void Update(Department department)
+        {
+            using (var conn = connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Update Department set DepartmentName = @dName where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", department.Id);
+                    cmd.Parameters.AddWithValue("@dName", department.DepartmentName);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Department where @id = Id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

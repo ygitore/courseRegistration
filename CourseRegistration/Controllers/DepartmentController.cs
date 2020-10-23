@@ -34,10 +34,27 @@ namespace CourseRegistration.Controllers
             }
             return Ok(_departmentRepository.Get(id));
         }
+        [HttpPost]
         public IActionResult Post(Department department)
         {
             _departmentRepository.Add(department);
             return CreatedAtAction("Get", new { id = department.Id }, department);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Department department)
+        {
+            if(id != department.Id)
+            {
+                return BadRequest();
+            }
+            _departmentRepository.Update(department);
+            return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _departmentRepository.Delete(id);
+            return NoContent();
         }
     }
 }
