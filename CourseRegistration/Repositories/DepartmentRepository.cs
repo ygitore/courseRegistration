@@ -49,6 +49,31 @@ namespace CourseRegistration.Repositories
                     return departments;
                 }
             }
+         
+        }
+        public Department Get(int id)
+        {
+            using (var conn = connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, DepartmentName from Department where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+                    Department department = null;
+                    while (reader.Read())
+                    {
+                        department = new Department
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DepartmentName = reader.GetString(reader.GetOrdinal("DepartmentName"))
+                        };
+                    }
+                    reader.Close();
+                    return department;
+                }
+            }
         }
     }
 }

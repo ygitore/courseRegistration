@@ -23,5 +23,10 @@ namespace CourseRegistration.Controllers
         {
             return Ok(_departmentRepository.GetAllDepartments());
         }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_departmentRepository.Get(id));
+        }       
     }
 }
