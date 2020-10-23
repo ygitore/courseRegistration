@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CourseRegistration.Model;
 using CourseRegistration.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,17 @@ namespace CourseRegistration.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
+            var department = _departmentRepository.Get(id);
+            if(department == null)
+            {
+                return NotFound();
+            }
             return Ok(_departmentRepository.Get(id));
-        }       
+        }
+        public IActionResult Post(Department department)
+        {
+            _departmentRepository.Add(department);
+            return CreatedAtAction("Get", new { id = department.Id }, department);
+        }
     }
 }

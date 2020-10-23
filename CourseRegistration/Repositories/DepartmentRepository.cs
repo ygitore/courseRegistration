@@ -75,5 +75,19 @@ namespace CourseRegistration.Repositories
                 }
             }
         }
+        public void Add(Department department)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "INSERT INTO Department(DepartmentName) OUTPUT INSERTED.ID VALUES(@dName)";
+                    cmd.Parameters.AddWithValue("@dName", department.DepartmentName);
+                    //executes sql query and returns very first row of first column then converts result into integer and assigned to new department Id
+                    department.Id = (int)cmd.ExecuteScalar();
+                };
+            }
+        }
     }
 }
