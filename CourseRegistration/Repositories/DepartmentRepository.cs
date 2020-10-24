@@ -87,7 +87,7 @@ namespace CourseRegistration.Repositories
                     //executes sql query and returns very first row of first column then converts result into integer and assigned to new department Id
                     department.Id = (int)cmd.ExecuteScalar();
                 };
-            }
+            };
         }
         public void Update(Department department)
         {

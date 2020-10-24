@@ -34,5 +34,10 @@ namespace CourseRegistration.Controllers
             }
             return Ok(course);
         }
+        public IActionResult Post(Course course)
+        {
+            _courseRepository.Add(course);
+            return Ok(course);
+        }
     }
 }
