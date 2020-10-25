@@ -88,5 +88,20 @@ namespace CourseRegistration.Repositories
                 };
             };
         }
+        public void Update(Course course)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Update Course set CourseName = @cName, CourseCode = @cCode where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", course.Id);
+                    cmd.Parameters.AddWithValue("@cName", course.CourseName);
+                    cmd.Parameters.AddWithValue("@cCode", course.CourseCode);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

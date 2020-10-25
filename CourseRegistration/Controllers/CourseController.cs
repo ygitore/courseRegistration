@@ -34,10 +34,22 @@ namespace CourseRegistration.Controllers
             }
             return Ok(course);
         }
+        [HttpPost]
         public IActionResult Post(Course course)
         {
             _courseRepository.Add(course);
             return Ok(course);
         }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Course course)
+        {
+            if(id != course.Id)
+            {
+                return BadRequest();
+            }
+            _courseRepository.Update(course);
+            return NoContent();
+        }
+
     }
 }
