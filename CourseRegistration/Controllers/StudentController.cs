@@ -34,5 +34,15 @@ namespace CourseRegistration.Controllers
             }
             return Ok(student);
         }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Student student)
+        {
+            if(id != student.Id)
+            {
+                return BadRequest();
+            }
+            _studentRepository.Update(student);
+            return NoContent();
+        }
     }
 }
