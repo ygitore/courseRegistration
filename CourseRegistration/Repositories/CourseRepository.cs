@@ -30,7 +30,7 @@ namespace CourseRegistration.Repositories
                 using(var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Course";
-                    var reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     var courses = new List<Course>(); 
                     while (reader.Read())
                     {
