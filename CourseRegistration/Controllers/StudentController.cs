@@ -34,6 +34,16 @@ namespace CourseRegistration.Controllers
             }
             return Ok(student);
         }
+        [HttpPost]
+        public IActionResult Post(Student student)
+        {
+            if(student == null)
+            {
+                return BadRequest();
+            }
+            _studentRepository.Add(student);
+            return Ok(student);
+        }
         [HttpPut("{id}")]
         public IActionResult Put(int id, Student student)
         {

@@ -82,6 +82,25 @@ namespace CourseRegistration.Repositories
                 };
             };
         }
+        public void Add(Student student)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Insert Into Student (firstName, lastName, age, genderId, email,departmentId, instructorId) OUTPUT INSERTED.ID Values(@fName,@lName, @age,@genderid, @email, @departmentId,@instructorId) ";
+                    cmd.Parameters.AddWithValue("@fName", student.FirstName);
+                    cmd.Parameters.AddWithValue("@lName", student.LastName);
+                    cmd.Parameters.AddWithValue("@age", student.Age);
+                    cmd.Parameters.AddWithValue("@genderId", student.GenderId);
+                    cmd.Parameters.AddWithValue("@email", student.Email);
+                    cmd.Parameters.AddWithValue("@departmentId", student.DepartmentId);
+                    cmd.Parameters.AddWithValue("@instructorId", student.InstructorId);
+                    student.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
         public void Update(Student student)
         {
             using(var conn = connection)
