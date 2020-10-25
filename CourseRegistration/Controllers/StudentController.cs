@@ -44,5 +44,16 @@ namespace CourseRegistration.Controllers
             _studentRepository.Update(student);
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Student student = _studentRepository.Get(id);
+            if(student == null)
+            {
+                return BadRequest();
+            }
+            _studentRepository.Remove(id);
+            return NoContent();
+        }
     }
 }
