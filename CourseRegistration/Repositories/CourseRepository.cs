@@ -103,5 +103,18 @@ namespace CourseRegistration.Repositories
                 }
             }
         }
+        public void Remove(int id)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Delete from Course where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
