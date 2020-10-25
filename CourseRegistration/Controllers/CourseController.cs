@@ -61,6 +61,5 @@ namespace CourseRegistration.Controllers
             _courseRepository.Remove(id);
             return NoContent();
         }
-
     }
 }

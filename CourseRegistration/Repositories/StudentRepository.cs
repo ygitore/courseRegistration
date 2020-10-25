@@ -52,5 +52,35 @@ namespace CourseRegistration.Repositories
                 };
             }
         }
+        public Student Get(int id)
+        {
+            using(var conn = connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, firstName, lastName, age, genderId, email,departmentId, instructorId from student where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    Student student = null;
+                    while (reader.Read())
+                    {
+                        student = new Student
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            FirstName = reader.GetString(reader.GetOrdinal("firstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("lastName")),
+                            Email = reader.GetString(reader.GetOrdinal("email")),
+                            Age = reader.GetInt32(reader.GetOrdinal("age")),
+                            GenderId = reader.GetInt32(reader.GetOrdinal("genderId")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("genderId")),
+                            InstructorId = reader.GetInt32(reader.GetOrdinal("instructorId"))
+                        };
+                    }
+                    reader.Close();
+                    return student;
+                };
+            };
+        }
     }
 }
