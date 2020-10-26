@@ -93,10 +93,33 @@ namespace CourseRegistration.Repositories
                     cmd.Parameters.AddWithValue("@fName", student.FirstName);
                     cmd.Parameters.AddWithValue("@lName", student.LastName);
                     cmd.Parameters.AddWithValue("@age", student.Age);
-                    cmd.Parameters.AddWithValue("@genderId", student.GenderId);
                     cmd.Parameters.AddWithValue("@email", student.Email);
-                    cmd.Parameters.AddWithValue("@departmentId", student.DepartmentId);
-                    cmd.Parameters.AddWithValue("@instructorId", student.InstructorId);
+                    if (student.GenderId.ToString() == null)
+                    {
+                        cmd.Parameters.AddWithValue("@genderId", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@genderId", student.GenderId);
+                    }
+
+                    if (student.DepartmentId.ToString() == null)
+                    {
+                        cmd.Parameters.AddWithValue("@departmentId", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@departmentId", student.DepartmentId);
+                    }
+                    if (student.InstructorId.ToString() == null)
+                    {
+                        cmd.Parameters.AddWithValue("@instructorId", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@instructorId", student.InstructorId);
+                    }
+                    
                     student.Id = (int)cmd.ExecuteScalar();
                 }
             }
