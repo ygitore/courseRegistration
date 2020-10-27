@@ -29,7 +29,7 @@ namespace CourseRegistration.Repositories
                 conn.Open();
                 using(var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, firstName, lastName, age, genderId, email,departmentId, instructorId from student";
+                    cmd.CommandText = "SELECT s.Id, s.firstName, s.lastName, s.age, s.genderId, s.email,s.departmentId, s.instructorId, g.Gender from student s left join Gender g on g.Id = s.genderId ";
                     SqlDataReader reader = cmd.ExecuteReader();
                     var students = new List<Student>();
                     while (reader.Read())
@@ -42,6 +42,11 @@ namespace CourseRegistration.Repositories
                             Email = reader.GetString(reader.GetOrdinal("email")),
                             Age = reader.GetInt32(reader.GetOrdinal("age")),
                             GenderId = reader.GetInt32(reader.GetOrdinal("genderId")),
+                            Gender = new Gender
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("genderId")),
+                                gender = reader.GetString(reader.GetOrdinal("gender"))
+                            },
                             DepartmentId = reader.GetInt32(reader.GetOrdinal("genderId")),
                             InstructorId = reader.GetInt32(reader.GetOrdinal("instructorId"))
                         };
